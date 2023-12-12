@@ -17,7 +17,7 @@ namespace advance_csharp.test
         [TestMethod]
         public async Task GetProductById()
         {
-            Guid id = new("A5267D4A-4030-4EA8-ACEA-00001AED5CA9");
+            Guid id = new("5A58D7A6-09E9-4F87-984C-00010B110B7E");
             ResponseGetProductById response = await _ProductService.GetById(id);
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Data.Id.Equals(id));
