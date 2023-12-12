@@ -31,7 +31,8 @@ namespace advance_csharp.Controllers
                 string username = HttpContext.GetName();
                 response = await _OrderService.Get(username);
                 _LoggingService.LogInfo(JsonSerializer.Serialize(response));
-                return new JsonResult(response);
+                var result = new JsonResult(response);
+                return result;
             }
             catch (Exception ex)
             {

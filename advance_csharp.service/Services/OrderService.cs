@@ -141,7 +141,7 @@ namespace advance_csharp.service.Services
                 if (account != null && context.Orders != null)
                 {
                     IQueryable<Order> query = context.Orders.Where(a => a.AccountId == account.Id).AsQueryable();
-                    List<OrderModel>? orders = await query.Select(a => new OrderModel
+                    List<OrderModel> orders = await query.Select(a => new OrderModel
                     {
                         Id = a.Id,
                         TotalPrice = a.TotalPrice,
