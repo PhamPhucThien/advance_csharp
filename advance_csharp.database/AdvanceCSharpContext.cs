@@ -13,7 +13,7 @@ namespace advance_csharp.database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             _ = optionsBuilder
-                .UseSqlServer("Server=localhost;Database=advance_csharp;User Id=sa;Password=12345;Trusted_Connection=False;MultipleActiveResultSets=true");
+                .UseSqlServer("Server=sql.bsite.net\\MSSQL2016;Database=sherrin1st_;User Id=sherrin1st_;Password=Taodeptrai1st;Trusted_Connection=False;MultipleActiveResultSets=true");
         }
     }
 }
