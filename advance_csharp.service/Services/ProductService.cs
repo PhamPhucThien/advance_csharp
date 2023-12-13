@@ -32,6 +32,11 @@ namespace advance_csharp.service.Services
                             Images = product.Images,
                             Category = product.Category
                         };
+                        if (contain.Quantity <= 0)
+                        {
+                            product.Quantity = 0;
+                            product.IsAvailable = false;
+                        }
                         context.Products.Add(contain);
                     }
                     else
@@ -138,6 +143,11 @@ namespace advance_csharp.service.Services
                         if (product.Images != null) contain.Images = product.Images;
                         if (product.Category != null) contain.Category = product.Category;
                         if (product.IsAvailable != null) contain.IsAvailable = product.IsAvailable.Value;
+                        if (product.Quantity <= 0)
+                        {
+                            product.Quantity = 0;
+                            product.IsAvailable = false;
+                        }
 
                         context.Products.Update(contain);
                     }
