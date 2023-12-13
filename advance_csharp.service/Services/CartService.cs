@@ -56,6 +56,8 @@ namespace advance_csharp.service.Services
                             Category = a.Category
                         }).ToListAsync();
 
+                        long TotalPrice = 0;
+
                         foreach (string record in records)
                         {
                             if (record != "")
@@ -64,11 +66,15 @@ namespace advance_csharp.service.Services
                                 Guid id = new(recordInfo[0]);
                                 products.ForEach(x =>
                                 {
-                                    if (x.Id == id) x.Quantity = Int32.Parse(recordInfo[1]);
+                                    if (x.Id == id) { 
+                                        x.Quantity = Int32.Parse(recordInfo[1]);
+                                        TotalPrice += (x.Quantity * Int64.Parse(x.Price));
+                                    }
                                 });
                             }
                         }
                         response.Data = products;
+                        response.TotalPrice = TotalPrice;
                     }    
                 }
             }
@@ -233,9 +239,9 @@ namespace advance_csharp.service.Services
                                 cart.CartRecord = cart.CartRecord.TrimStart('/').TrimEnd('/');
                             }
                         }
+                        context.Carts.Update(cart);
 
                     }
-                    context.Carts.Update(cart);
                 }
 
                 int i = await context.SaveChangesAsync();

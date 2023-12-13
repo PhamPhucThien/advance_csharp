@@ -14,5 +14,7 @@
         }
 
         public List<ProductModelForCart> Data { get; set; } = new();
+
+        public long TotalPrice { get; set; } = 0;
     }
 }

@@ -84,7 +84,7 @@ namespace advance_csharp.service.Services
 
                 if (account != null)
                 {
-                    response.Id = account.Id;
+                    response.Id = account.Id.ToString();
                     response.Username = account.Username;
                     response.Name = account.Name;
                     response.Role = account.Role;

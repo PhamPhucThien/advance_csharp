@@ -32,7 +32,7 @@ namespace advance_csharp.service.Services
                         CartRecord = a.CartRecord
                     }).FirstOrDefaultAsync();
 
-                    if (cart != null && context.Products != null)
+                    if (cart != null && context.Products != null && cart.CartRecord != "")
                     {
                         string[] records = cart.CartRecord.Split('/');
                         List<Guid> codes = new();

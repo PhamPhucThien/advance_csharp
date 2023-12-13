@@ -30,12 +30,13 @@ namespace advance_csharp.service.Services
                             Price = product.Price,
                             Quantity = product.Quantity,
                             Images = product.Images,
-                            Category = product.Category
+                            Category = product.Category,
+                            IsAvailable = true
                         };
                         if (contain.Quantity <= 0)
                         {
-                            product.Quantity = 0;
-                            product.IsAvailable = false;
+                            contain.Quantity = 0;
+                            contain.IsAvailable = false;
                         }
                         context.Products.Add(contain);
                     }
@@ -59,14 +60,19 @@ namespace advance_csharp.service.Services
             using AdvanceCSharpContext context = new();
             if (context.Products != null)
             {
-                IQueryable<Product> query = context.Products.Where(a => a.Id == id);
-                Product? product = await query.Select(a => new Product
+                IQueryable<Product> query = context.Products.Where(a => a.Id == id && a.IsAvailable == true);
+                ProductModel? product = await query.Select(a => new ProductModel
                 {
-                    Id = a.Id,
+                    Id = a.Id.ToString(),
                     Name = a.Name,
+                    Price = a.Price,
+                    Quantity = a.Quantity,
+                    Unit = a.Unit,
+                    Images = a.Images,
+                    Category = a.Category,
                 }).FirstOrDefaultAsync();
 
-                if (product != null) getProductById.Data = product;
+                if (product != null && product.Id != string.Empty) getProductById.Data = product;
             }
 
             return getProductById;
@@ -82,7 +88,7 @@ namespace advance_csharp.service.Services
             using AdvanceCSharpContext context = new();
             if (context.Products != null)
             {
-                IQueryable<Product>? query = context.Products;
+                IQueryable<Product>? query = context.Products.Where(a => a.IsAvailable == true);
 
                 if (search != null && search.Length != 0)
                 {
@@ -93,10 +99,15 @@ namespace advance_csharp.service.Services
                     .Skip(size * (page - 1))
                     .Take(size);
 
-                getProductBySearch.Data = await query.Select(a => new Product
+                getProductBySearch.Data = await query.Select(a => new ProductModelBySearch
                 {
-                    Id = a.Id,
+                    Id = a.Id.ToString(),
                     Name = a.Name,
+                    Price = a.Price,
+                    Quantity = a.Quantity,
+                    Unit = a.Unit,
+                    Images = a.Images,
+                    Category = a.Category,
                 }).ToListAsync();
             }
             return getProductBySearch;
@@ -143,10 +154,10 @@ namespace advance_csharp.service.Services
                         if (product.Images != null) contain.Images = product.Images;
                         if (product.Category != null) contain.Category = product.Category;
                         if (product.IsAvailable != null) contain.IsAvailable = product.IsAvailable.Value;
-                        if (product.Quantity <= 0)
+                        if (contain.Quantity <= 0)
                         {
-                            product.Quantity = 0;
-                            product.IsAvailable = false;
+                            contain.Quantity = 0;
+                            contain.IsAvailable = false;
                         }
 
                         context.Products.Update(contain);
