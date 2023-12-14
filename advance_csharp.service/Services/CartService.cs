@@ -163,7 +163,7 @@ namespace advance_csharp.service.Services
                         {
                             string[] records = cart.CartRecord.Split('/');
 
-                            IQueryable<Product> queryProduct = context.Products.Where(a => a.Id == request.ProductId);
+                            IQueryable<Product> queryProduct = context.Products.Where(a => a.Id == request.ProductId && a.IsAvailable == true);
                             ProductModelForCart? product = await queryProduct.Select(a => new ProductModelForCart
                             {
                                 Id = a.Id,

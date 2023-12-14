@@ -86,9 +86,12 @@ namespace advance_csharp.service.Services
                                         }
                                         else
                                         {
-                                            invalidQuantity = true;
-                                            string updateCart = x.Id + "&" + x.Quantity;
-                                            cart.CartRecord = cart.CartRecord.Replace(record, updateCart);
+                                            if (x.Quantity != 0)
+                                            {
+                                                invalidQuantity = true;
+                                                string updateCart = x.Id + "&" + x.Quantity;
+                                                cart.CartRecord = cart.CartRecord.Replace(record, updateCart);
+                                            }
                                         }
                                     }
                                 });
