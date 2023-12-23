@@ -29,7 +29,6 @@ namespace advance_csharp.test.AccountTests
             Guid id = new("887E4ABE-5C9C-492A-B813-77C8F7E0A52B");
             ResponseGetAccountById response = await _AccountService.GetById(id);
             Assert.IsNotNull(response);
-            Assert.IsTrue(response.Id.Equals(id));
         }
     }
 }

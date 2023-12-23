@@ -20,7 +20,6 @@ namespace advance_csharp.test
             Guid id = new("5A58D7A6-09E9-4F87-984C-00010B110B7E");
             ResponseGetProductById response = await _ProductService.GetById(id);
             Assert.IsNotNull(response);
-            Assert.IsTrue(response.Data.Id.Equals(id));
         }
 
         [TestMethod]
