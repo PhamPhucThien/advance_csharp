@@ -2,7 +2,7 @@ using advance_csharp.dto.Response.Products;
 using advance_csharp.service.Interfaces;
 using advance_csharp.service.Services;
 
-namespace advance_csharp.test
+namespace advance_csharp.test.ProductTests
 {
     [TestClass]
     public class GetProductTest

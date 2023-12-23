@@ -1,7 +1,4 @@
-﻿using advance_csharp.database.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace advance_csharp.dto.Response.Products
+﻿namespace advance_csharp.dto.Response.Products
 {
     public class ResponseGetProductById
     {

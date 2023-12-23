@@ -31,7 +31,11 @@ namespace advance_csharp.Controllers
             try
             {
                 ResponseLogin response = new();
-                if (HttpContext.GetName() == string.Empty) response = await _AuthenticationService.Login(request);
+                if (HttpContext.GetName() == string.Empty)
+                {
+                    response = await _AuthenticationService.Login(request);
+                }
+
                 _LoggingService.LogInfo(JsonSerializer.Serialize(response));
                 return new JsonResult(response);
             }
@@ -51,7 +55,11 @@ namespace advance_csharp.Controllers
             try
             {
                 ResponseRegister response = new();
-                if (HttpContext.GetName() == string.Empty) response = await _AuthenticationService.Register(request);
+                if (HttpContext.GetName() == string.Empty)
+                {
+                    response = await _AuthenticationService.Register(request);
+                }
+
                 _LoggingService.LogInfo(JsonSerializer.Serialize(response));
                 return new JsonResult(response);
             }

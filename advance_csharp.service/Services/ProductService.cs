@@ -20,7 +20,7 @@ namespace advance_csharp.service.Services
             {
                 foreach (AddProductModel product in requestAddProduct.Data)
                 {
-                    bool tryParse = Int32.TryParse(product.Price, out _);
+                    bool tryParse = int.TryParse(product.Price, out _);
                     if (tryParse)
                     {
                         Product contain = new()
@@ -38,13 +38,13 @@ namespace advance_csharp.service.Services
                             contain.Quantity = 0;
                             contain.IsAvailable = false;
                         }
-                        context.Products.Add(contain);
+                        _ = context.Products.Add(contain);
                     }
                     else
                     {
                         break;
                     }
-                    
+
                 }
 
                 response.NumberOfSuccess = await context.SaveChangesAsync();
@@ -72,7 +72,10 @@ namespace advance_csharp.service.Services
                     Category = a.Category,
                 }).FirstOrDefaultAsync();
 
-                if (product != null && product.Id != string.Empty) getProductById.Data = product;
+                if (product != null && product.Id != string.Empty)
+                {
+                    getProductById.Data = product;
+                }
             }
 
             return getProductById;
@@ -138,29 +141,50 @@ namespace advance_csharp.service.Services
 
                     if (contain != null)
                     {
-                        if (product.Name != null) contain.Name = product.Name;
+                        if (product.Name != null)
+                        {
+                            contain.Name = product.Name;
+                        }
+
                         if (product.Price != null)
                         {
-                            bool tryParse = Int32.TryParse(product.Price, out _);
+                            bool tryParse = int.TryParse(product.Price, out _);
                             if (tryParse)
                             {
                                 contain.Price = product.Price;
-                            } else
+                            }
+                            else
                             {
                                 break;
                             }
                         }
-                        if (product.Quantity != null) contain.Quantity = product.Quantity.Value;
-                        if (product.Images != null) contain.Images = product.Images;
-                        if (product.Category != null) contain.Category = product.Category;
-                        if (product.IsAvailable != null) contain.IsAvailable = product.IsAvailable.Value;
+                        if (product.Quantity != null)
+                        {
+                            contain.Quantity = product.Quantity.Value;
+                        }
+
+                        if (product.Images != null)
+                        {
+                            contain.Images = product.Images;
+                        }
+
+                        if (product.Category != null)
+                        {
+                            contain.Category = product.Category;
+                        }
+
+                        if (product.IsAvailable != null)
+                        {
+                            contain.IsAvailable = product.IsAvailable.Value;
+                        }
+
                         if (contain.Quantity <= 0)
                         {
                             contain.Quantity = 0;
                             contain.IsAvailable = false;
                         }
 
-                        context.Products.Update(contain);
+                        _ = context.Products.Update(contain);
                     }
                 }
 

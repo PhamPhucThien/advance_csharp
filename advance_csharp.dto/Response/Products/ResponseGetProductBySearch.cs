@@ -1,6 +1,4 @@
-﻿using advance_csharp.database.Models;
-
-namespace advance_csharp.dto.Response.Products
+﻿namespace advance_csharp.dto.Response.Products
 {
     public class ResponseGetProductBySearch
     {

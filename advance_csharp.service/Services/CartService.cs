@@ -1,5 +1,5 @@
-﻿using advance_csharp.database.Models;
-using advance_csharp.database;
+﻿using advance_csharp.database;
+using advance_csharp.database.Models;
 using advance_csharp.dto.Request.Carts;
 using advance_csharp.dto.Response.Carts;
 using advance_csharp.service.Interfaces;
@@ -66,16 +66,17 @@ namespace advance_csharp.service.Services
                                 Guid id = new(recordInfo[0]);
                                 products.ForEach(x =>
                                 {
-                                    if (x.Id == id) { 
-                                        x.Quantity = Int32.Parse(recordInfo[1]);
-                                        TotalPrice += (x.Quantity * Int64.Parse(x.Price));
+                                    if (x.Id == id)
+                                    {
+                                        x.Quantity = int.Parse(recordInfo[1]);
+                                        TotalPrice += x.Quantity * long.Parse(x.Price);
                                     }
                                 });
                             }
                         }
                         response.Data = products;
                         response.TotalPrice = TotalPrice;
-                    }    
+                    }
                 }
             }
 
@@ -109,7 +110,11 @@ namespace advance_csharp.service.Services
 
                         if (cart != null && context.Products != null)
                         {
-                            if (cart.CartRecord != "") cart.CartRecord += "/";
+                            if (cart.CartRecord != "")
+                            {
+                                cart.CartRecord += "/";
+                            }
+
                             IQueryable<Product> queryProduct = context.Products.Where(a => a.Id == request.ProductId);
                             Product? product = await queryProduct.Select(a => new Product
                             {
@@ -121,16 +126,19 @@ namespace advance_csharp.service.Services
                             {
                                 string newProduct = request.ProductId.ToString() + "&" + request.Quantity.ToString();
                                 cart.CartRecord += newProduct;
-                                context.Carts.Update(cart);
+                                _ = context.Carts.Update(cart);
                             }
                         }
                     }
 
                     int i = await context.SaveChangesAsync();
-                    if (i != 0) response.IsSuccess = true;
+                    if (i != 0)
+                    {
+                        response.IsSuccess = true;
+                    }
                 }
             }
-            
+
             return response;
         }
 
@@ -191,12 +199,15 @@ namespace advance_csharp.service.Services
                                     }
                                 }
                             }
-                            context.Carts.Update(cart);
+                            _ = context.Carts.Update(cart);
                         }
                     }
-                   
+
                     int i = await context.SaveChangesAsync();
-                    if (i != 0) response.IsSuccess = true;
+                    if (i != 0)
+                    {
+                        response.IsSuccess = true;
+                    }
                 }
             }
 
@@ -239,13 +250,16 @@ namespace advance_csharp.service.Services
                                 cart.CartRecord = cart.CartRecord.TrimStart('/').TrimEnd('/');
                             }
                         }
-                        context.Carts.Update(cart);
+                        _ = context.Carts.Update(cart);
 
                     }
                 }
 
                 int i = await context.SaveChangesAsync();
-                if (i != 0) response.IsSuccess = true;
+                if (i != 0)
+                {
+                    response.IsSuccess = true;
+                }
             }
 
             return response;

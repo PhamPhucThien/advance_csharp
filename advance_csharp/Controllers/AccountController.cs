@@ -32,7 +32,8 @@ namespace advance_csharp.Controllers
                 response = await _AccountService.Get(username);
                 _LoggingService.LogInfo(JsonSerializer.Serialize(response));
                 return new JsonResult(response);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _LoggingService.LogError(ex);
                 return StatusCode(500, ex.Message);

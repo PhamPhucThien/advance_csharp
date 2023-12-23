@@ -83,10 +83,13 @@ namespace advance_csharp.service.Services
                         CartRecord = ""
                     };
 
-                    context.Accounts.Add(createAccount);
-                    context.Carts.Add(createCart);
+                    _ = context.Accounts.Add(createAccount);
+                    _ = context.Carts.Add(createCart);
                     int i = await context.SaveChangesAsync();
-                    if (i != 0) response.IsSuccess = true;
+                    if (i != 0)
+                    {
+                        response.IsSuccess = true;
+                    }
                 }
             }
 
@@ -102,16 +105,16 @@ namespace advance_csharp.service.Services
                         new Claim(ClaimTypes.Role, account.Role)
                     };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtSettings:Key").Value));
+            SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtSettings:Key").Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            SigningCredentials creds = new(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new(
                 claims: claims,
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: creds);
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            string jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return "Bearer " + jwt;
         }

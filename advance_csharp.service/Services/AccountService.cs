@@ -1,5 +1,5 @@
-﻿using advance_csharp.database.Models;
-using advance_csharp.database;
+﻿using advance_csharp.database;
+using advance_csharp.database.Models;
 using advance_csharp.dto.Request.Accounts;
 using advance_csharp.dto.Response.Accounts;
 using advance_csharp.service.Interfaces;
@@ -30,11 +30,14 @@ namespace advance_csharp.service.Services
                 if (contain != null)
                 {
                     contain.IsAvailable = false;
-                    context.Accounts.Update(contain);
+                    _ = context.Accounts.Update(contain);
                 }
 
                 int i = await context.SaveChangesAsync();
-                if (i != 0) response.IsSuccess = true;
+                if (i != 0)
+                {
+                    response.IsSuccess = true;
+                }
             }
 
             return response;
@@ -55,7 +58,8 @@ namespace advance_csharp.service.Services
                     Role = a.Role
                 }).FirstOrDefaultAsync();
 
-                if (account != null) { 
+                if (account != null)
+                {
                     response.Username = account.Username;
                     response.Name = account.Name;
                     response.Role = account.Role;
@@ -115,13 +119,24 @@ namespace advance_csharp.service.Services
 
                 if (contain != null)
                 {
-                    if (requestUpdateAccount.Name != null) contain.Name = requestUpdateAccount.Name;
-                    if (requestUpdateAccount.Password != null) contain.Password = requestUpdateAccount.Password;
-                    context.Accounts.Update(contain);
+                    if (requestUpdateAccount.Name != null)
+                    {
+                        contain.Name = requestUpdateAccount.Name;
+                    }
+
+                    if (requestUpdateAccount.Password != null)
+                    {
+                        contain.Password = requestUpdateAccount.Password;
+                    }
+
+                    _ = context.Accounts.Update(contain);
                 }
 
                 int i = await context.SaveChangesAsync();
-                if (i != 0) response.IsSuccess = true;
+                if (i != 0)
+                {
+                    response.IsSuccess = true;
+                }
             }
 
             return response;

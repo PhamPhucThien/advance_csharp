@@ -31,7 +31,7 @@ namespace advance_csharp.Controllers
                 string username = HttpContext.GetName();
                 response = await _OrderService.Get(username);
                 _LoggingService.LogInfo(JsonSerializer.Serialize(response));
-                var result = new JsonResult(response);
+                JsonResult result = new(response);
                 return result;
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace advance_csharp.Controllers
         [Route("get-order-by-id")]
         [HttpGet]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetById([FromQuery] Guid Id) 
+        public async Task<IActionResult> GetById([FromQuery] Guid Id)
         {
             try
             {

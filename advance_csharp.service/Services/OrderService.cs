@@ -1,9 +1,8 @@
-﻿using advance_csharp.database.Models;
-using advance_csharp.database;
+﻿using advance_csharp.database;
+using advance_csharp.database.Models;
 using advance_csharp.dto.Response.Orders;
 using advance_csharp.service.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static advance_csharp.dto.Response.Orders.ResponseGetOrder;
 
 namespace advance_csharp.service.Services
 {
@@ -70,7 +69,7 @@ namespace advance_csharp.service.Services
                             {
                                 string[] recordInfo = record.Split("&");
                                 Guid id = new(recordInfo[0]);
-                                int quantity = Int32.Parse(recordInfo[1]);
+                                int quantity = int.Parse(recordInfo[1]);
                                 products.ForEach(x =>
                                 {
                                     if (x.Id == id)
@@ -78,11 +77,18 @@ namespace advance_csharp.service.Services
                                         if (x.Quantity >= quantity)
                                         {
                                             string newProduct = x.Id + "&" + x.Name + "&" + x.Price + "&" + quantity;
-                                            if (newOrderRecord != string.Empty) newOrderRecord += "/";
+                                            if (newOrderRecord != string.Empty)
+                                            {
+                                                newOrderRecord += "/";
+                                            }
+
                                             newOrderRecord += newProduct;
                                             x.Quantity -= quantity;
-                                            total += Int32.Parse(x.Price) * quantity;
-                                            if (x.Quantity == 0) x.IsAvailable = false;
+                                            total += int.Parse(x.Price) * quantity;
+                                            if (x.Quantity == 0)
+                                            {
+                                                x.IsAvailable = false;
+                                            }
                                         }
                                         else
                                         {
@@ -103,10 +109,10 @@ namespace advance_csharp.service.Services
 
                             foreach (Product product in products)
                             {
-                                context.Products.Update(product);
+                                _ = context.Products.Update(product);
                             }
 
-                            context.Carts.Update(cart);
+                            _ = context.Carts.Update(cart);
                             Order order = new()
                             {
                                 AccountId = account.Id,
@@ -118,7 +124,7 @@ namespace advance_csharp.service.Services
                         }
                         else
                         {
-                            context.Carts.Update(cart);
+                            _ = context.Carts.Update(cart);
                             response.IsSuccess = false;
                         }
                         _ = await context.SaveChangesAsync();

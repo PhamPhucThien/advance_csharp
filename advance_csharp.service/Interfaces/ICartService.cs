@@ -8,6 +8,6 @@ namespace advance_csharp.service.Interfaces
         Task<ResponseChangeOnCart> Add(string username, RequestModifyCart requestModifyCart);
         Task<ResponseGetCart> Get(string username);
         Task<ResponseChangeOnCart> Update(string username, RequestModifyCart requestModifyCart);
-        Task<ResponseChangeOnCart> Delete (string username, Guid ProductId);
+        Task<ResponseChangeOnCart> Delete(string username, Guid ProductId);
     }
 }
